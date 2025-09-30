@@ -643,7 +643,7 @@ function RitualPageContent() {
   };
 
   return (
-    <div className="min-h-dvh overflow-hidden" style={{ backgroundImage: 'url(/bg3.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
+    <div className="h-dvh overflow-hidden" style={{ backgroundImage: 'url(/bg3.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
       {/* Header */}
       <header className="pt-safe px-6 py-4">
         <div className="flex items-center justify-between">
@@ -832,7 +832,7 @@ function RitualPageContent() {
         </div>
 
         {/* 中央牌堆（抽牌入口） */}
-        <div className="mt-[-60px] flex justify-center relative"> {/* 添加relative定位 */}
+        <div className="mt-[-60px] flex justify-center relative mb-0"> {/* 添加mb-0确保底部无margin */}
 
           {/* 开始解读按钮 - 使用和洗牌按钮相同的样式和定位，独立层 */}
           {selectedSlots.filter(Boolean).length === cardCount && (
@@ -871,8 +871,8 @@ function RitualPageContent() {
             style={{ 
               width: '100%', 
               maxWidth: '800px', 
-              height: '560px', 
-              paddingTop: '120px', // 从60px增加到120px，让卡堆向下移动60px
+              height: '400px', // 减少高度避免超出视口
+              paddingTop: '80px', // 减少paddingTop
               perspective: '1200px', // 3D 透视
               marginLeft: '-9px', // 向左移动60px
               touchAction: 'none',

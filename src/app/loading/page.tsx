@@ -27,15 +27,43 @@ function LoadingPageContent() {
     return "解读完成！";
   };
 
+  // 根据牌阵类型获取进度条配置
+  const getProgressConfig = (spreadType: string | null) => {
+    switch (spreadType) {
+      case 'single':
+        return {
+          interval: 500, // 0.4秒
+          increment: { min: 1, max: 4 } // 1-4%
+        };
+      case 'three-card':
+        return {
+          interval: 900, // 0.6秒
+          increment: { min: 0.8, max: 2 } // 0.8-2.5%
+        };
+      case 'five-card':
+        return {
+          interval: 900, // 0.8秒
+          increment: { min: 0.8, max: 2 } // 0.5-1.5%
+        };
+      default:
+        return {
+          interval: 600, // 默认0.6秒
+          increment: { min: 1, max: 3 } // 1-3%
+        };
+    }
+  };
+
   // 启动假进度
   const startFakeProgress = () => {
+    const config = getProgressConfig(spread);
+    
     const timer = setInterval(() => {
       setProgress(prev => {
         if (prev.percent >= 99) {
           clearInterval(timer);
           return prev;
         }
-        const inc = Math.random() * 1.5 + 0.5; // 每次增加 0.5-2%
+        const inc = Math.random() * (config.increment.max - config.increment.min) + config.increment.min;
         const next = Math.min(prev.percent + inc, 99);
         return {
           ...prev,
@@ -43,7 +71,7 @@ function LoadingPageContent() {
           phaseText: getPhaseText(next)
         };
       });
-    }, 800); // 每0.8秒推进一次
+    }, config.interval);
 
     return timer;
   };
