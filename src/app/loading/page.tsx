@@ -28,7 +28,7 @@ function LoadingPageContent() {
   };
 
   // 根据牌阵类型获取进度条配置
-  const getProgressConfig = (spreadType: string | null) => {
+  const getProgressConfig = (spreadType: string) => {
     switch (spreadType) {
       case 'single':
         return {
@@ -36,6 +36,7 @@ function LoadingPageContent() {
           increment: { min: 1, max: 4 } // 1-4%
         };
       case 'three-card':
+      case 'situation-action-outcome':
         return {
           interval: 900, // 0.6秒
           increment: { min: 0.8, max: 2 } // 0.8-2.5%
@@ -43,20 +44,19 @@ function LoadingPageContent() {
       case 'five-card':
         return {
           interval: 900, // 0.8秒
-          increment: { min: 0.8, max: 2 } // 0.5-1.5%
+          increment: { min: 0.8, max: 2 } // 0.5-1.8%
         };
       default:
         return {
           interval: 600, // 默认0.6秒
-          increment: { min: 1, max: 3 } // 1-3%
+          increment: { min: 0.8, max: 3 } // 0.8-2.5%
         };
     }
   };
 
   // 启动假进度
-  const startFakeProgress = () => {
-    const config = getProgressConfig(spread);
-    
+  const startFakeProgress = (spreadType: string = 'single') => {
+    const config = getProgressConfig(spreadType);
     const timer = setInterval(() => {
       setProgress(prev => {
         if (prev.percent >= 99) {
@@ -117,8 +117,8 @@ function LoadingPageContent() {
     const performReading = async () => {
       let progressTimer: NodeJS.Timeout | null = null;
       try {
-        // 启动假进度
-        progressTimer = startFakeProgress();
+        // 启动假进度，根据牌阵类型调整速度
+        progressTimer = startFakeProgress(spread || 'single');
 
         // 从sessionStorage获取选中的卡牌数据
         let cards;
