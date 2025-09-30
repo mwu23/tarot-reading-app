@@ -643,7 +643,7 @@ function RitualPageContent() {
   };
 
   return (
-    <div className="h-screen overflow-hidden" style={{ backgroundImage: 'url(/bg3.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', minHeight: '100vh', minHeight: '100dvh' }}>
+    <div className="h-screen overflow-hidden" style={{ backgroundImage: 'url(/bg3.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', minHeight: '100dvh' }}>
       {/* Header */}
       <header className="pt-safe px-6 py-4">
         <div className="flex items-center justify-between">
